@@ -47,19 +47,15 @@ func (c *Client) endpointURL(endpoint string) *url.URL {
 	return &u
 }
 
-func (c *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
+func (c *Client) doRequest(ctx context.Context, req *http.Request) (*http.Response, error) {
 	if ctx != nil {
 		req = req.WithContext(ctx)
 	}
 	return c.httpClient.Do(req)
 }
 
-func (c *Client) get(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
-	u, err := c.endpointURL(endpoint)
-	if err != nil {
-		return nil, err
-	}
-
+func (c *Client) getRequest(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
+	u := c.endpointURL(endpoint)
 	if query != nil {
 		u.RawQuery = query.Encode()
 	}
@@ -69,33 +65,28 @@ func (c *Client) get(ctx context.Context, endpoint string, query url.Values) (*h
 		return nil, err
 	}
 
-	resp, err := c.do(ctx, req)
+	resp, err := c.doRequest(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	return resp, nil
-
 }
 
-func (c *Client) post(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
-	u, err := c.endpointURL(endpoint)
-	if err != nil {
-		return nil, err
-	}
+func (c *Client) postRequest(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+	u := c.endpointURL(endpoint)
 
 	req, err := http.NewRequest(http.MethodPost, u.String(), body)
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := c.do(ctx, req)
+	resp, err := c.doRequest(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	return resp, nil
-
 }
