@@ -20,16 +20,14 @@ type Client struct {
 	endpointBaseURL *url.URL
 }
 
-func New(apiKey string) (*Client, error) {
+func New(apiKey string, httpClient *http.Client) (*Client, error) {
 	if apiKey == "" {
 		return nil, errors.New("apiKey is required")
 	}
 
-	return &Client{
-		apiKey:     apiKey,
-		httpClient: http.DefaultClient,
-	}, nil
-}
+	if httpClient == nil {
+		httpClient = http.DefaultClient
+	}
 
 func (c *Client) endpointURL(endpoint string) (*url.URL, error) {
 	u, err := url.Parse(SteamAPIBaseURL)
