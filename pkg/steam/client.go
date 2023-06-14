@@ -35,6 +35,13 @@ func (c *Client) endpointURL(endpoint string) (*url.URL, error) {
 		return nil, err
 	}
 
+	return &Client{
+		apiKey:          apiKey,
+		httpClient:      httpClient,
+		endpointBaseURL: u,
+	}, nil
+}
+
 	u.Path += endpoint
 }
 
