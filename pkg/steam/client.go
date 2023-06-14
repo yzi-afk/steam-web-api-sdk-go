@@ -29,7 +29,6 @@ func New(apiKey string, httpClient *http.Client) (*Client, error) {
 		httpClient = http.DefaultClient
 	}
 
-func (c *Client) endpointURL(endpoint string) (*url.URL, error) {
 	u, err := url.Parse(SteamAPIBaseURL)
 	if err != nil {
 		return nil, err
@@ -42,7 +41,10 @@ func (c *Client) endpointURL(endpoint string) (*url.URL, error) {
 	}, nil
 }
 
+func (c *Client) endpointURL(endpoint string) *url.URL {
+	u := *c.endpointBaseURL
 	u.Path += endpoint
+	return &u
 }
 
 func (c *Client) do(ctx context.Context, req *http.Request) (*http.Response, error) {
