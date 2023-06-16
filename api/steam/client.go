@@ -11,8 +11,9 @@ import (
 const (
 	SteamAPIBaseURL = "https://api.steampowered.com/"
 
-	APIEndpointGetAppList    = "ISteamApps/GetAppList/v2/"
-	APIEndpointGetServerInfo = "ISteamWebAPIUtil/GetServerInfo/v1/"
+	APIEndpointGetAppList          = "ISteamApps/GetAppList/v2/"
+	APIEndpointGetServerInfo       = "ISteamWebAPIUtil/GetServerInfo/v1/"
+	APIEndpointGetSupportedAPIList = "ISteamWebAPIUtil/GetSupportedAPIList/v1/"
 )
 
 type Client struct {
