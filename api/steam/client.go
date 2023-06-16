@@ -14,6 +14,7 @@ const (
 	APIEndpointGetSupportedAPIList = "ISteamWebAPIUtil/GetSupportedAPIList/v1/"
 
 	APIEndpointDOTA2GetLiveLeagueGames = "IDOTA2Match_570/GetLiveLeagueGames/v1/"
+	APIEndpointGetDOTA2MatchDetails    = "IDOTA2Match_570/GetMatchDetails/v1/"
 )
 
 type Client struct {
