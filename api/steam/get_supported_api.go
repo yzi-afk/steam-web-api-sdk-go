@@ -1,9 +1,7 @@
 package steam
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 )
 
 type GetSupportedAPIListResponse struct {
@@ -32,15 +30,7 @@ func (c *Client) GetSupportedAPIList(r *GetSupportedAPIListResponse) error {
 	}
 	defer resp.Body.Close()
 
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(b, r)
-	if err != nil {
-		return err
-	}
+	ParseJson(resp.Body, r)
 
 	return nil
 }

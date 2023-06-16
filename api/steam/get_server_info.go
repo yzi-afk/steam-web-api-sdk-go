@@ -1,9 +1,7 @@
 package steam
 
 import (
-	"encoding/json"
 	"fmt"
-	"io"
 )
 
 type ServerInfoResponse struct {
@@ -18,15 +16,7 @@ func (c *Client) GetServerInfo(r *ServerInfoResponse) error {
 	}
 	defer resp.Body.Close()
 
-	b, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(b, r)
-	if err != nil {
-		return err
-	}
+	ParseJson(resp.Body, r)
 
 	return nil
 }
