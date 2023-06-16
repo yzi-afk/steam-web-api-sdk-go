@@ -1,6 +1,7 @@
 package steam
 
 import (
+	"fmt"
 	"net/url"
 )
 
@@ -31,7 +32,7 @@ type GetTeamInfoByTeamIDResponse struct {
 
 func (c *Client) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, error) {
 	params := url.Values{}
-	params.Add("start_at_team_id", string(teamID))
+	params.Add("start_at_team_id", fmt.Sprint(teamID))
 	params.Add("teams_requested", "1")
 
 	var response GetTeamInfoByTeamIDResponse
