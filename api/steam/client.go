@@ -1,9 +1,7 @@
 package steam
 
 import (
-	"context"
 	"errors"
-	"io"
 	"net/http"
 	"net/url"
 )
@@ -49,46 +47,26 @@ func (c *Client) endpointURL(endpoint string) *url.URL {
 	return &u
 }
 
-func (c *Client) doRequest(ctx context.Context, req *http.Request) (*http.Response, error) {
-	if ctx != nil {
-		req = req.WithContext(ctx)
-	}
-	return c.httpClient.Do(req)
-}
-
-func (c *Client) getRequest(ctx context.Context, endpoint string, query url.Values) (*http.Response, error) {
-	u := c.endpointURL(endpoint)
-	if query != nil {
-		u.RawQuery = query.Encode()
-	}
-
-	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	resp, err := c.doRequest(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	return resp, nil
-}
-
-func (c *Client) postRequest(ctx context.Context, endpoint string, body io.Reader) (*http.Response, error) {
+func (c *Client) getRequest(endpoint string, query url.Values, v interface{}) error {
 	u := c.endpointURL(endpoint)
 
-	req, err := http.NewRequest(http.MethodPost, u.String(), body)
+	q := u.Query()
+	q.Set("key", c.apiKey)
+	for k, v := range query {
+		q.Set(k, v[0])
+	}
+	u.RawQuery = q.Encode()
+
+	resp, err := c.httpClient.Get(u.String())
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	resp, err := c.doRequest(ctx, req)
-	if err != nil {
-		return nil, err
+	if resp.StatusCode != http.StatusOK {
+		return errors.New(resp.Status)
 	}
-	defer resp.Body.Close()
 
-	return resp, nil
+	ParseJson(resp.Body, v)
+
+	return nil
 }

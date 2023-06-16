@@ -1,9 +1,5 @@
 package steam
 
-import (
-	"fmt"
-)
-
 type GetSupportedAPIListResponse struct {
 	Apilist struct {
 		Interfaces []struct {
@@ -24,13 +20,9 @@ type GetSupportedAPIListResponse struct {
 }
 
 func (c *Client) GetSupportedAPIList(r *GetSupportedAPIListResponse) error {
-	resp, err := c.httpClient.Get(fmt.Sprint(c.endpointURL(APIEndpointGetSupportedAPIList), "?key=", c.apiKey))
-	if err != nil {
+	if err := c.getRequest(APIEndpointGetSupportedAPIList, nil, r); err != nil {
 		return err
 	}
-	defer resp.Body.Close()
-
-	ParseJson(resp.Body, r)
 
 	return nil
 }
