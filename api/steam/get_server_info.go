@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"net/http"
 )
 
 type ServerInfoResponse struct {
@@ -13,7 +12,7 @@ type ServerInfoResponse struct {
 }
 
 func (c *Client) GetServerInfo(r *ServerInfoResponse) error {
-	resp, err := http.Get(fmt.Sprint(c.endpointURL(APIEndpointGetServerInfo), "?key=", c.apiKey))
+	resp, err := c.httpClient.Get(fmt.Sprint(c.endpointURL(APIEndpointGetServerInfo), "?key=", c.apiKey))
 	if err != nil {
 		return err
 	}
@@ -24,9 +23,7 @@ func (c *Client) GetServerInfo(r *ServerInfoResponse) error {
 		return err
 	}
 
-	bodyJson := &ServerInfoResponse{}
-
-	err = json.Unmarshal(b, &bodyJson)
+	err = json.Unmarshal(b, r)
 	if err != nil {
 		return err
 	}
