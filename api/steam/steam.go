@@ -88,7 +88,7 @@ func (s *Steam) getRequest(endpoint string, query url.Values, v interface{}) err
 	return nil
 }
 
-func (s *Steam) GetTeamInfoByTeamID(teamID uint64) (*TeamInfo, error) {
+func (s *Steam) GetTeamInfoByTeamID(teamID uint64) (*DOTA2TeamInfo, error) {
 	params := url.Values{}
 	params.Add("start_at_team_id", fmt.Sprint(teamID))
 	params.Add("teams_requested", "1")
