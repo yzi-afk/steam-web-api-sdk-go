@@ -5,8 +5,8 @@ type ServerInfoResponse struct {
 	ServerTimeString string `json:"servertimestring"`
 }
 
-func (c *Client) GetServerInfo(r *ServerInfoResponse) error {
-	if err := c.getRequest(APIEndpointGetServerInfo, nil, r); err != nil {
+func (s *Steam) GetServerInfo(r *ServerInfoResponse) error {
+	if err := s.getRequest(APIEndpointGetServerInfo, nil, r); err != nil {
 		return err
 	}
 

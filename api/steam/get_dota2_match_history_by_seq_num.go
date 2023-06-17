@@ -65,11 +65,11 @@ type GetDOTA2MatchHistoryBySequenceNumResponse struct {
 	} `json:"result"`
 }
 
-func (c *Client) GetDOTA2MatchHistoryBySequenceNum(startAtMatchSeqNum int64) (*GetDOTA2MatchHistoryBySequenceNumResponse, error) {
+func (s *Steam) GetDOTA2MatchHistoryBySequenceNum(startAtMatchSeqNum int64) (*GetDOTA2MatchHistoryBySequenceNumResponse, error) {
 	var response GetDOTA2MatchHistoryBySequenceNumResponse
 	query := url.Values{}
 	query.Add("start_at_match_seq_num", fmt.Sprintf("%d", startAtMatchSeqNum))
-	err := c.getRequest("IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1", query, &response)
+	err := s.getRequest("IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1", query, &response)
 	if err != nil {
 		return nil, err
 	}

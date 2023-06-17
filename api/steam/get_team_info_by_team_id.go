@@ -30,13 +30,13 @@ type GetTeamInfoByTeamIDResponse struct {
 	} `json:"result"`
 }
 
-func (c *Client) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, error) {
+func (s *Steam) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, error) {
 	params := url.Values{}
 	params.Add("start_at_team_id", fmt.Sprint(teamID))
 	params.Add("teams_requested", "1")
 
 	var response GetTeamInfoByTeamIDResponse
-	if err := c.getRequest("IDOTA2Match_570/GetTeamInfoByTeamID/v1", params, &response); err != nil {
+	if err := s.getRequest("IDOTA2Match_570/GetTeamInfoByTeamID/v1", params, &response); err != nil {
 		return nil, err
 	}
 

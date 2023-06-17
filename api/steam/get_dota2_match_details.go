@@ -91,13 +91,13 @@ type GetDOTA2MatchDetailsResponse struct {
 	} `json:"result"`
 }
 
-func (c *Client) GetDOTA2MatchDetails(matchID uint64) (*GetDOTA2MatchDetailsResponse, error) {
+func (s *Steam) GetDOTA2MatchDetails(matchID uint64) (*GetDOTA2MatchDetailsResponse, error) {
 	var result GetDOTA2MatchDetailsResponse
 
 	query := url.Values{}
 	query.Add("match_id", fmt.Sprintf("%d", matchID))
 
-	if err := c.getRequest("IDOTA2Match_570/GetMatchDetails/V001/", query, &result); err != nil {
+	if err := s.getRequest("IDOTA2Match_570/GetMatchDetails/V001/", query, &result); err != nil {
 		return nil, err
 	}
 

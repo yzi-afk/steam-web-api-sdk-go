@@ -19,8 +19,8 @@ type GetSupportedAPIListResponse struct {
 	} `json:"apilist"`
 }
 
-func (c *Client) GetSupportedAPIList(r *GetSupportedAPIListResponse) error {
-	if err := c.getRequest(APIEndpointGetSupportedAPIList, nil, r); err != nil {
+func (s *Steam) GetSupportedAPIList(r *GetSupportedAPIListResponse) error {
+	if err := s.getRequest(APIEndpointGetSupportedAPIList, nil, r); err != nil {
 		return err
 	}
 

@@ -121,9 +121,9 @@ type GetLiveLeagueGamesResponse struct {
 	} `json:"result"`
 }
 
-func (c *Client) GetLiveLeagueGames() (*GetLiveLeagueGamesResponse, error) {
+func (s *Steam) GetLiveLeagueGames() (*GetLiveLeagueGamesResponse, error) {
 	var result GetLiveLeagueGamesResponse
-	if err := c.getRequest(APIEndpointDOTA2GetLiveLeagueGames, nil, &result); err != nil {
+	if err := s.getRequest(APIEndpointDOTA2GetLiveLeagueGames, nil, &result); err != nil {
 		return nil, err
 	}
 

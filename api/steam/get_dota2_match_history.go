@@ -28,9 +28,9 @@ type GetDOTA2MatchHistoryResponse struct {
 	} `json:"result"`
 }
 
-func (c *Client) GetDOTA2MatchHistory() (*GetDOTA2MatchHistoryResponse, error) {
+func (s *Steam) GetDOTA2MatchHistory() (*GetDOTA2MatchHistoryResponse, error) {
 	var response GetDOTA2MatchHistoryResponse
-	err := c.getRequest("IDOTA2Match_570/GetMatchHistory/v1", url.Values{}, &response)
+	err := s.getRequest("IDOTA2Match_570/GetMatchHistory/v1", url.Values{}, &response)
 	if err != nil {
 		return nil, err
 	}
