@@ -88,7 +88,7 @@ func (s *Steam) getRequest(endpoint string, query url.Values, v interface{}) err
 	return nil
 }
 
-func (s *Steam) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, error) {
+func (s *Steam) GetTeamInfoByTeamID(teamID uint64) (*TeamInfo, error) {
 	params := url.Values{}
 	params.Add("start_at_team_id", fmt.Sprint(teamID))
 	params.Add("teams_requested", "1")
@@ -98,7 +98,12 @@ func (s *Steam) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, e
 		return nil, err
 	}
 
-	return &response, nil
+	if len(response.Result.Teams) == 0 {
+		return nil, errors.New("team not found")
+	}
+
+	return &response.Result.Teams[0], nil
+
 }
 
 func (s *Steam) GetSupportedAPIList(r *GetSupportedAPIListResponse) error {

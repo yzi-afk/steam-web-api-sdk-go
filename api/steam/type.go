@@ -11,27 +11,29 @@ type App struct {
 
 type GetTeamInfoByTeamIDResponse struct {
 	Result struct {
-		Status int `json:"status"`
-		Teams  []struct {
-			Name             string `json:"name"`
-			Tag              string `json:"tag"`
-			Abbreviation     string `json:"abbreviation"`
-			TimeCreated      int    `json:"time_created"`
-			Logo             int64  `json:"logo"`
-			LogoSponsor      int64  `json:"logo_sponsor"`
-			CountryCode      string `json:"country_code"`
-			URL              string `json:"url"`
-			GamesPlayed      int    `json:"games_played"`
-			Player0AccountID int    `json:"player_0_account_id,omitempty"`
-			Player1AccountID int    `json:"player_1_account_id,omitempty"`
-			Player2AccountID int    `json:"player_2_account_id,omitempty"`
-			AdminAccountID   int    `json:"admin_account_id"`
-			Player3AccountID int    `json:"player_3_account_id,omitempty"`
-			Player4AccountID int    `json:"player_4_account_id,omitempty"`
-			Player5AccountID int    `json:"player_5_account_id,omitempty"`
-			Player6AccountID int    `json:"player_6_account_id,omitempty"`
-		} `json:"teams"`
+		Status int        `json:"status"`
+		Teams  []TeamInfo `json:"teams"`
 	} `json:"result"`
+}
+
+type TeamInfo struct {
+	Name             string `json:"name"`
+	Tag              string `json:"tag"`
+	Abbreviation     string `json:"abbreviation"`
+	TimeCreated      int    `json:"time_created"`
+	Logo             int64  `json:"logo"`
+	LogoSponsor      int64  `json:"logo_sponsor"`
+	CountryCode      string `json:"country_code"`
+	URL              string `json:"url"`
+	GamesPlayed      int    `json:"games_played"`
+	Player0AccountID int    `json:"player_0_account_id,omitempty"`
+	Player1AccountID int    `json:"player_1_account_id,omitempty"`
+	Player2AccountID int    `json:"player_2_account_id,omitempty"`
+	AdminAccountID   int    `json:"admin_account_id"`
+	Player3AccountID int    `json:"player_3_account_id,omitempty"`
+	Player4AccountID int    `json:"player_4_account_id,omitempty"`
+	Player5AccountID int    `json:"player_5_account_id,omitempty"`
+	Player6AccountID int    `json:"player_6_account_id,omitempty"`
 }
 
 type GetSupportedAPIListResponse struct {
