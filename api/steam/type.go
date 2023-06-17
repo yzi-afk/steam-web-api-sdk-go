@@ -1,5 +1,9 @@
 package steam
 
+type GetAppListResponse struct {
+	AppList AppList `json:"applist"`
+}
+
 type AppList struct {
 	Apps []App `json:"apps"`
 }

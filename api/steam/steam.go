@@ -165,10 +165,11 @@ func (s *Steam) GetDOTA2MatchDetails(matchID uint64) (*GetDOTA2MatchDetailsRespo
 
 }
 
-func (s *Steam) GetAppList(appList *AppList) error {
-	if err := s.getRequest(APIEndpointGetAppList, nil, nil); err != nil {
-		return err
+func (s *Steam) GetAppList() (*AppList, error) {
+	var response GetAppListResponse
+	if err := s.getRequest(APIEndpointGetAppList, nil, &response); err != nil {
+		return nil, err
 	}
 
-	return nil
+	return &response.AppList, nil
 }
