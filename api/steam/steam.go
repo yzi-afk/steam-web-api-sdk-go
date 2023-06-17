@@ -16,8 +16,11 @@ const (
 	APIEndpointGetServerInfo       = "ISteamWebAPIUtil/GetServerInfo/v1/"
 	APIEndpointGetSupportedAPIList = "ISteamWebAPIUtil/GetSupportedAPIList/v1/"
 
-	APIEndpointDOTA2GetLiveLeagueGames = "IDOTA2Match_570/GetLiveLeagueGames/v1/"
-	APIEndpointGetDOTA2MatchDetails    = "IDOTA2Match_570/GetMatchDetails/v1/"
+	APIEndpointDOTA2GetLiveLeagueGames      = "IDOTA2Match_570/GetLiveLeagueGames/v1/"
+	APIEndpointGetDOTA2MatchDetails         = "IDOTA2Match_570/GetMatchDetails/v1/"
+	APIEndpointGetDOTA2TeamInfoByTeamID     = "IDOTA2Match_570/GetTeamInfoByTeamID/v1"
+	APIEndpointGetDOTA2MatchHistory         = "IDOTA2Match_570/GetMatchHistory/v1"
+	APIEndpointGetDOTA2MatchHistoryBySeqNum = "IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1"
 )
 
 type Steam struct {
@@ -91,7 +94,7 @@ func (s *Steam) GetTeamInfoByTeamID(teamID int) (*GetTeamInfoByTeamIDResponse, e
 	params.Add("teams_requested", "1")
 
 	var response GetTeamInfoByTeamIDResponse
-	if err := s.getRequest("IDOTA2Match_570/GetTeamInfoByTeamID/v1", params, &response); err != nil {
+	if err := s.getRequest(APIEndpointGetDOTA2TeamInfoByTeamID, params, &response); err != nil {
 		return nil, err
 	}
 
@@ -125,7 +128,7 @@ func (s *Steam) GetLiveLeagueGames() (*GetLiveLeagueGamesResponse, error) {
 
 func (s *Steam) GetDOTA2MatchHistory() (*GetDOTA2MatchHistoryResponse, error) {
 	var response GetDOTA2MatchHistoryResponse
-	err := s.getRequest("IDOTA2Match_570/GetMatchHistory/v1", url.Values{}, &response)
+	err := s.getRequest(APIEndpointGetDOTA2MatchHistory, url.Values{}, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +139,7 @@ func (s *Steam) GetDOTA2MatchHistoryBySequenceNum(startAtMatchSeqNum int64) (*Ge
 	var response GetDOTA2MatchHistoryBySequenceNumResponse
 	query := url.Values{}
 	query.Add("start_at_match_seq_num", fmt.Sprintf("%d", startAtMatchSeqNum))
-	err := s.getRequest("IDOTA2Match_570/GetMatchHistoryBySequenceNum/v1", query, &response)
+	err := s.getRequest(APIEndpointGetDOTA2MatchHistoryBySeqNum, query, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +152,7 @@ func (s *Steam) GetDOTA2MatchDetails(matchID uint64) (*GetDOTA2MatchDetailsRespo
 	query := url.Values{}
 	query.Add("match_id", fmt.Sprintf("%d", matchID))
 
-	if err := s.getRequest("IDOTA2Match_570/GetMatchDetails/V001/", query, &result); err != nil {
+	if err := s.getRequest(APIEndpointGetDOTA2MatchDetails, query, &result); err != nil {
 		return nil, err
 	}
 
